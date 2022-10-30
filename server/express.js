@@ -29,8 +29,7 @@ app.post('/process_post',urlencodedParser,(req,res)=>{
     var response = {
         username:req.body.user,
         password:req.body.pass,
-        email:req.body.email,
     };
-    res.send("user added")
+    console.log(response)
 })
 
