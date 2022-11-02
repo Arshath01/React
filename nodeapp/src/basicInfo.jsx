@@ -1,70 +1,49 @@
-import React, {useState} from 'react';
+import React,{useState} from 'react';
 
-const UserInfo = ()=> {
-   const [style,setStyle] = useState(
-      {
-         nav:' bg-primary text-dark w-100 p-3' ,
-         container:' p-3 text-light container  rounded mt-5',
-         formText:'form-text text-dark m-2',
-         input:'form-control p-2 m-1 w-75',
-         button:'p-2 m-1 w-75 bg-primary text-white rounded'
-      }
-   );
-   const[username,setUsername] = useState('');
-   const[password,setPassword] = useState('');
-   function handleSubmit(){
-      fetch('http://localhost:5000/process_post',{
-         method:'POST',
-         body:JSON.stringify(
-            {
-               name:username,
-               pass:password,
-            }
-            
-         )
-      })
+const UserInfo = () => {
+   const [username,setUsername] = useState ('') ;
+   const [password,setPassword] = useState ('') ;
+   const [style,setStyle] = useState({
+      container : [' p-5 border w-50 '],
+      inlineStyle : { 
+         margin: 'auto', 
+         marginTop : '80px' ,
+       } ,
+      form : 'form-control',
+      button : 'btn btn-primary ' ,
+      group : [
+         'input-group',            //group[0]
+         'input-group-prepend',   //group[1]
+         'input-group-text'      //group[2]
+      ] ,
+   }) ;
+   function handleUser(e) {
+      setUsername(e.target.value)
+   }
+   function handlePassword (e) {
+      setPassword (e.target.value)
    }
    return (
-      <div>
-         <nav className={style.nav} >
-            <h2>Form Submission</h2>
-         </nav>
-         <form className={style.container} >
+      <div className={style.container} style= {style.inlineStyle} >
 
-            <span className={style.formText}>
-               <b>Username</b>
-            </span> <br/>
+         {/* username */}
+         <div className= {style.group[0]} >
+            <div className={style.group[1]} > 
+               <span className= {style.group[2]} > username </span>
+            </div>
+            <input type="text" value={username} onChange = {(e) => {handleUser(e)}} className= {style.form} />
+         </div> <br />
 
-            <input
-             type="text"
-              value={username}
-               className={style.input} 
-              onChange={(e)=>{
-            setUsername(e.target.value)
-               }}/> 
-
-            <span className={style.formText}>
-               <b>Password</b>
-            </span> <br/>
-
-            <input 
-               type="password"
-                 value={password}
-                   className={style.input} 
-                 onChange={(e)=>{
-               setPassword(e.target.value)
-               }}/>  
-
-             <br/>
-
-            <button 
-               className={style.button} 
-                  style={{border:'none'}} 
-                     onClick={handleSubmit}>
-               <b>Submit</b>
-            </button>
-
-         </form>
+         {/* password */}
+         <div className= {style.group[0]} >
+            <div className={style.group[1]} > 
+               <span className= {style.group[2]} > password </span>
+            </div>
+            <input type="text" value={password} onChange = {(e) => {handlePassword(e)}} className= {style.form} />
+         </div> <br />
+         
+         {/* submit */}
+         <button className={style.button} > submit </button>
       </div>
    )
 }
